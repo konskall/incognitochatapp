@@ -762,7 +762,7 @@ function renderRichText(msg) {
   // 5️⃣ Υπόλοιπα URLs → clickable links
   html = html.replace(
     /https?:\/\/[^\s<>"]+/g,
-    `<a href="$&" target="_blank" rel="noopener noreferrer" style="color:#3b82f6;text-decoration:underline;">$&</a>`
+    `<a href="$&" target="_blank" rel="noopener noreferrer" style="color:#1E40AF;text-decoration:underline;">$&</a>`
   );
   
   // 6️⃣ Τελικό βήμα: Αντικατάσταση YouTube placeholders με το embed iframe
@@ -1158,3 +1158,4 @@ document.addEventListener('keydown', (e) => {
 </body>
 
 </html>
+
