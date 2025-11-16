@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<link rel="icon" type="image/png" href="https://konskall.github.io/incognitochatapp/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="https://konskall.github.io/incognitochatapp/favicon.svg" />
+<link rel="shortcut icon" href="https://konskall.github.io/incognitochatapp/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="https://konskall.github.io/incognitochatapp/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-title" content="Incognito Chat App" />
+<link rel="manifest" href="https://konskall.github.io/incognitochatapp/site.webmanifest" />
+<!-- Open Graph Tags -->
+<meta property="og:title" content="Incognito Chat App - Speak Free">
+<meta property="og:description" content="Real-time encrypted chat with PIN-based private rooms. Share freely, anonymously.">
+<meta property="og:image" content="https://konskall.github.io/incognitochatapp/og-incognito.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://konskall.github.io/incognitochatapp">
+<!-- Twitter Card Tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Incognito Chat App - Speak Free">
+<meta name="twitter:description" content="Real-time encrypted chat with PIN-based private rooms.">
+<meta name="twitter:image" content="https://konskall.github.io/incognitochatapp/og-incognito.png">
+<!-- LinkedIn Tags -->
+<meta property="linkedin:url" content="https://konskall.github.io/incognitochatapp/">
+<meta property="linkedin:title" content="Incognito Chat App - Speak Free">
+<meta property="linkedin:description" content="Real-time encrypted chat with PIN-based private rooms">
+<meta property="linkedin:image" content="https://konskall.github.io/incognitochatapp/og-incognito.png">
+<!-- Greek Localization -->
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta charset="UTF-8" />
+<meta name="author" content="[KonsKall]">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title id="pageTitle">Incognito Chat App - Speak Free</title>
+<style>
+html, body {
+  height: 100%;
+  min-height: 100dvh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+ body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 1300px;
+  min-width: 0px;
+  width: 100%;
+  margin: 0 auto;
+  background: #f9fafb;
+  padding: 0.5rem;
+  color: #222;
+  min-height: 100dvh;
+  height: 105dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow-x: hidden;
+}
+#app, main, #root {
+  flex: 1;
+  min-height: 0; /* fix για flex containers */
+  display: flex;
+  flex-direction: column;
+}
+h2 {
+  text-align: center;
+  color: #3b82f6;
+  font-weight: 700;
+  font-size: 2rem;
+  margin-top: 0.4rem; 
+  margin: 0.9rem 0 1.1rem 0; /* Ελαχιστοποίηση κενών πάνω & κάτω */
+  padding: 0;
+}
+/* Form */
+#usernameForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  background: rgba(255 255 255 / 0.25);
+  backdrop-filter: blur(12px);
+  border-radius: 15px;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 4px 24px rgba(59,130,246,0.2);
+  padding: 28px 18px 18px 18px;
+  gap: 15px;
+margin-bottom: 0.5rem !important;
+}
+#usernameInput, #avatarInput {
+  border: 1px solid #dedede;
+  border-radius: 11px;
+  padding: 15px 14px;
+  font-size: 1.05rem;
+  width: 60%;
+  margin: 0 10px 10px;
+  background: rgba(255 255 255 / 0.9);
+  color: #222;
+  transition: border-color 0.3s;
+}
+#usernameInput:focus, #avatarInput:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+#saveUsernameBtn {
+  font-size:1.13rem;
+  box-shadow: 0 2px 8px #4580f51a;
+  background: linear-gradient(90deg, #4781f2, #2659d0 90%);
+  border: none;
+  padding: 10px 24px;
+  color: #fff;
+  font-weight: 700;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+#saveUsernameBtn:hover, #saveUsernameBtn:focus {
+  background: linear-gradient(90deg, #2142a2, #143c80 90%);
+  box-shadow: 0 4px 14px #24235c44;
+}
+#pinInput {
+padding: 15px 14px;
+  font-size: 1.05rem;
+  border: 1px solid #dedede;
+  border-radius: 11px;
+  width: 60%;
+  margin: 0 10px 10px;
+  background: rgba(255 255 255 / 0.9);
+  color: #222;
+  transition: border-color 0.3s;
+}
+#pinInput:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+/* Chat container */
+#chat {
+  display: flex;
+  flex-direction: column;
+  border-radius: 24px;
+  background: rgba(241,243,245,0.9);
+  box-shadow:
+    0 4px 20px rgba(0,0,0,0.1);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(59,130,246,0.2);
+  overflow: hidden;
+   height: 100%;
+  max-height: 100vh;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+/* Messages container */
+#messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem;
+  scroll-behavior: smooth;
+  color: #2c3e50;
+  font-size: 1.1rem;
+  line-height: 1.3;
+  user-select: text;
+  
+}
+/* Message styles */
+.message {
+  max-width: 70%;
+  margin-bottom: 1.2rem;
+  padding: 12px 20px;
+  border-radius: 20px;
+  display: flex;
+  align-items: flex-start;
+  word-wrap: break-word;
+  transition: background-color 0.3s;
+}
+.message sent {
+  margin-left: auto;
+}
+.message.sent {
+  background: #c8dbf7; 
+  color: #000000;
+  backdrop-filter: blur(14px);
+  margin-left: auto;
+  border-bottom-right-radius: 6px;
+  box-shadow:
+  0 6px 15px rgba(53,123,189,0.5);
+  flex-direction: row-reverse;
+  text-align: right;
+  transition: background 0.25s;
+}
+.message.sent .username {
+  color: #000000;
+}
+.message.received {
+  background: rgba(160, 163, 170, 0.21);
+  color: #1c1e20;  
+  backdrop-filter: blur(14px);
+  margin-right: auto;
+  border-bottom-left-radius: 6px;
+  box-shadow:
+    0 12px 20px -6px rgba(100, 112, 128, 0.25);
+  transition: background 0.25s;
+}
+.message .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+  object-fit: cover;
+    box-shadow: 0 4px 16px 0 rgba(59,130,246,0.20), /* κύρια γαλάζια διάχυση */
+              0 1px 7px 0 rgba(30, 64, 175, 0.12),  /* navy πιο βαθειά σκιά */
+              0 0 0 2px #fff;
+  flex-shrink: 0;
+}
+.message.sent .avatar {
+  margin-left: 12px;
+  margin-right: 0;
+  box-shadow: 0 4px 16px 0 rgba(59,130,246,0.20), /* κύρια γαλάζια διάχυση */
+              0 1px 7px 0 rgba(30, 64, 175, 0.12),  /* navy πιο βαθειά σκιά */
+              0 0 0 2px #fff;
+}
+.message .username {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 6px;
+  user-select: none;
+}
+/* Message content */
+ .messageContent, .message div:last-child {
+  flex-grow: 1;
+  word-break: break-all;
+  overflow-wrap: break-word;
+  white-space: pre-line;
+}
+/* Input form container */
+#formContainer {
+  padding: 1rem 2.5rem;
+  border-top: 1px solid rgba(59,130,246,0.3);
+  background: #fff;
+  display: flex;
+  align-items: center;
+  border-bottom-left-radius: 24px;
+  border-bottom-right-radius: 24px;
+  box-shadow: 0 -2px 16px rgba(53,123,189,0.15);
+}
+/* Textarea message input */
+#msgInput {
+  flex-grow: 1;
+  padding: 12px 16px;
+  border-radius: 24px;
+  border: 1.5px solid #ced4da;
+  font-size: 1.15rem;
+  resize: none;
+  height: 24px;
+  color: #2c3e50;
+  transition: border-color 0.3s;
+}
+#msgInput:focus {
+  border-color: #3b82f6;
+  outline: none;
+}
+/* Buttons */
+#sendBtn {
+  background-color: #3b82f6;
+  border: none;
+  color: white;
+  font-weight: 700;
+  padding: 8px 22px;
+  margin-left: 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1.25rem;
+  transition: background-color 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#emojiBtn {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-weight: 700;
+  padding: 8px 22px;
+  margin-left: 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1.25rem;
+  transition: background-color 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#emojiBtn svg {
+  display: block;
+  margin: 0 auto;
+  width: 28px;
+  height: 28px;
+}
+#exitChatBtn {
+background: linear-gradient(90deg, #9ca3af, #6b7280);
+  border: none;
+  color: white;
+  font-weight: 700;
+  padding: 8px 22px;
+  margin-left: 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1.25rem;
+  transition: background-color 0.3s;
+}
+#exitChatBtn:hover {
+  background: linear-gradient(90deg, #6b7280, #4b5563);
+}
+#sendBtn:hover:enabled, #emojiBtn:hover {
+  background-color: #2563eb;
+}
+#sendBtn:disabled {
+  background-color: #93c5fd;
+  cursor: not-allowed;
+}
+/* Emoji picker container */
+#emojiPicker {
+  position: absolute;
+  right: 2rem;
+  bottom: 5rem;
+  z-index: 9999;
+}
+/* Responsive */
+@media (max-width: 600px) {
+  body {
+    margin: 0rem;
+    padding: 1rem;
+  }
+  
+  #chat {
+    height: 600px;
+  }
+  h2 {
+    font-size: 1.75rem;
+	margin-top: 0rem; 
+    padding: 0;
+  }
+  .emoji-picker {
+    width: 80vw !important;
+    left: 6vw !important;
+    right: auto !important;
+    padding: 0.6rem !important;
+    box-sizing: border-box !important;
+  }
+  @media (max-width: 600px) {
+  .emoji-grid {
+    gap: 1px !important;
+  }
+  .emoji-item {
+    font-size: 1rem;
+    padding: 1px 0;
+  }
+}
+   .message {
+    max-width: 95vw;
+  }
+  #formContainer {
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0.3rem 0.1rem;
+    gap: 5px;     
+  }
+  #msgInput {
+    width: 100% !important;
+    min-height: 10px;
+    font-size: 1rem;
+    margin: 0;
+    flex: 1 1 100%;
+  }
+  #sendBtn {
+    flex: 1;
+    margin: 0;
+    border-radius: 12px;
+    padding: 13px 0;
+    font-size: 1rem;
+	min-width: 36px;
+    min-height: 36px;
+    max-width: 89px;
+    max-height: 44px;
+  }
+   #exitChatBtn {
+    flex: 1;
+    margin: 0;
+    border-radius: 12px;
+    padding: 13px 0;
+    font-size: 1rem;
+	min-width: 36px;
+    min-height: 36px;
+    max-width: 89px;
+    max-height: 44px;
+  }
+  #emojiBtn {
+  background-color: transparent;  ← Αφαίρεσε το φόντο
+  border: none;
+  color: white;
+  font-weight: 700;
+  margin-left: 20px;
+  cursor: pointer;
+  transition: transform 0.2s;  ← Optional: hover effect
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  margin: 0;
+  border-radius: 12px;
+  padding: 10px 0;
+  font-size: 1rem;
+  min-width: 36px;
+  min-height: 36px;
+  max-width: 44px;
+  max-height: 44px;
+  }
+  #emojiBtn:hover {
+  transform: scale(1.15);  ← Optional: zoom on hover
+}
+   #messageContent, .message div:last-child {
+   word-break: break-all;
+   overflow-wrap: break-word;
+   white-space: pre-line;
+  }
+  #footer {
+    font-size: 0.85rem;
+    padding: 0.7rem 0;
+	
+  }
+  #usernameForm input,
+  #saveUsernameBtn {
+    width: 98%;
+    min-width: 0;
+    max-width: 100%;
+  }
+}
+/* Custom Emoji Picker */
+.emoji-picker {
+  display: none;
+  position: absolute;
+  bottom: 80px;
+  right: 20px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  padding: 1rem;
+  width: 320px;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 1000;
+  border: 2px solid #3b82f6;
+}
+.emoji-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr); /* Ή όσο θέλεις */
+  gap: 2px !important;   /* ↓ Μείωσε το gap */
+  padding: 0 !important;
+}
+
+.emoji-item {
+  font-size: 1.1rem;
+  padding: 2px !important;  /* ↓ Μείωσε το padding */
+  margin: 0 !important;
+}
+.emoji-picker.show {
+  display: block;
+}
+.emoji-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 8px;
+}
+.emoji-item {
+  font-size: 1.8rem;
+  padding: 8px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+  user-select: none;
+}
+.emoji-item:hover {
+  background-color: #e3f2fd;
+  transform: scale(1.1);
+}
+#footer {
+  text-align: center;
+  padding: 1rem 0;
+  color: #3b82f6;
+  font-size: 1rem;
+  background: none;
+  opacity: 0.8;
+}
+/* Info Box - Instructions */
+#infoBox {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 1.5rem;
+  margin-top: 1rem;
+  box-shadow: 0 4px 24px rgba(59, 130, 246, 0.2);
+  border: 1px solid rgba(59, 130, 246, 0.15);
+  color: #3b82f6;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  animation: slideUp 0.6s ease-out;
+}
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+#infoBox h3 {
+  color: #3b82f6;
+  font-weight: 700;
+  margin: 0 0 0.8rem 0;
+  font-size: 1.1rem;
+  text-align: center;
+}
+#infoBox ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+#infoBox li {
+  margin: 0.6rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+}
+#infoBox li:before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: #3b82f6;
+  font-weight: bold;
+}
+@media (max-width: 600px) {
+  #infoBox {
+    padding: 1rem;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+  }
+  #infoBox h3 {
+    font-size: 1rem;
+  }
+   #infoBox li {
+    padding-right: 1.2rem;
+    margin: 0.5rem 0;
+  }
+}
+.collapsible-card {
+  background: #fff;
+  border-radius: 14px;
+  margin: 8px 0 0 0 !important;
+  padding: 0 !important;
+  box-shadow: 0 2px 16px 0 #306ee914;
+  font-size: 1rem;
+  overflow: hidden;
+  transition: box-shadow 0.32s;
+}
+.collapsible-btn {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 10px 10px;
+  font-weight: 700;
+  color: #2563eb;
+  font-size: 1.10rem;
+  cursor: pointer;
+  outline: none;
+  justify-content: space-between;
+  gap: 6px;
+  user-select: none;
+  transition: background 0.18s;
+  justify-content: center;   /* Θα το φέρει ακριβώς στο κέντρο! */
+  text-align: center;   
+}
+.collapsible-btn:focus, .collapsible-btn:hover { background: #f7fafc; }
+.chevron {
+  transition: transform 0.22s cubic-bezier(.34,1.7,.67,1.3);
+  pointer-events: none;
+}
+.collapsible-card.open .chevron { transform: rotate(180deg);}
+.collapsible-content {
+  padding: 0 19px 16px 19px;
+  animation: fadein 0.21s;
+}
+@keyframes fadein {
+  from { opacity: 0; transform: translateY(-10px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+/* Delete Button Styling */
+#deleteChatBtn {
+  background-color: #DE5437;
+  border: none;
+  color: white;
+  font-weight: 700;
+  padding: 8px 22px;
+  margin-left: 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1.15rem;
+  transition: background-color 0.3s, transform 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 36px;
+  min-height: 36px;
+  max-width: 120px;
+  max-height: 44px;
+}
+#deleteChatBtn:hover {
+  background-color: #D62909;
+  transform: scale(1.05);
+}
+#deleteChatBtn:active {
+  transform: scale(0.98);
+}
+#deleteChatBtn:disabled {
+  background-color: #93c5fd;
+  cursor: not-allowed;
+  transform: scale(1);
+}
+/* Mobile Responsive */
+@media (max-width: 600px) {
+  #deleteChatBtn {
+    flex: 1;
+    margin: 0;
+    border-radius: 12px;
+    padding: 13px 0;
+    font-size: 1.15rem;
+    min-width: 0;
+  }
+}
+/* Confirmation Modal Styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+.modal.show {
+  display: flex;
+}
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+.modal-content {
+  position: relative;
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease-out;
+  text-align: center;
+}
+.modal-content h3 {
+  color: #222;
+  font-size: 1.5rem;
+  margin: 0 0 1rem 0;
+  font-weight: 700;
+}
+.modal-content p {
+  color: #666;
+  margin: 0.5rem 0;
+  line-height: 1.6;
+  text-align: center;
+}
+.modal-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  justify-content: center;
+}
+.modal-buttons button {
+  flex: 0 1 auto;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+.modal-buttons button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+#confirmDeleteBtn {
+  background-color: #DE5437;
+  color: white;
+}
+#confirmDeleteBtn:hover:not(:disabled) {
+  background-color: #D62909;
+}
+#cancelDeleteBtn {
+  background-color: #e5e7eb;
+  color: #222;
+}
+#cancelDeleteBtn:hover {
+  background-color: #d1d5db;
+}
+@media (max-width: 600px) {
+  .modal-content {
+    padding: 1.5rem;
+    width: 95%;
+  }
+  .modal-buttons {
+    flex-direction: column;
+    gap: 0.5rem;
+  }  
+  .modal-buttons button {
+    padding: 14px 0;
+  }
+}
+#roomNameInput {
+  padding: 15px 14px;
+  font-size: 1.05rem;
+  border: 1px solid #dedede;
+  border-radius: 11px;
+  width: 60%;
+  margin: 0 10px 10px;
+  background: rgba(255 255 255 / 0.9);
+  color: #222;
+  transition: border-color 0.3s;
+}
+#roomNameInput:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+#chatHeader {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.4rem;
+  margin: 0;
+  margin-bottom: 0.1rem;
+  padding: 0.1rem 0 0.1rem 0.3rem;
+  border-top: 1px dashed #eee;
+  border-bottom: 1px dashed #eee;
+  font-size: 0.85rem;
+  color: #aaa;
+  letter-spacing: 2px;
+}
+#chatHeader::before {
+  content: '·';
+  margin-right: 4px;
+}
+#participantCount {
+  font-weight: 700;
+  color: #3b82f6;
+  background: rgba(59, 130, 246, 0.1);
+  padding: 2px 6px;
+  border-radius: 6px;
+  display: inline-block;
+  min-width: 20px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+#roomNameDisplay {
+  font-size: 0.85rem;
+  color: #3b82f6;
+  font-weight: 700;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#chatHeader::after {
+  content: '';
+  width: 9px;
+  height: 9px;
+  background: #3b82f6;
+  border-radius: 50%;
+  margin-left: 4px;
+  opacity: 0.5;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 0.12; }
+}
+/* 🔴 BADGE ANIMATION */
+@keyframes badgePulse {
+  0%, 100% { 
+    background-color: #ef4444;
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+  }
+  50% { 
+    background-color: #dc2626;
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0);
+  }
+}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+body {
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f6f8fc;
+}
+.logo-title { display:flex; align-items:center; justify-content:center; margin-top:0px; margin-bottom:10px; gap:10px; }
+.logo-badge { width:40px; height:40px; display:flex; align-items:center; justify-content:center; }
+.logo-badge img {
+  width: 40px;
+  height: 40px;
+  display: block;
+  border-radius: 12px; /* option για πιο soft edges */
+}
+h1 { font-size:2rem; font-weight:700; color:#3b82f6; margin:0; }
+</style>
+</head>
+<body>
+<div class="logo-title">
+  <div class="logo-badge">
+  <img src="https://konskall.github.io/incognitochatapp/favicon-96x96.png" alt="App logo" width="40" height="40" style="display:block;"/>
+</div>
+  <h1>Incognito Chat</h1>
+</div>
+<div id="offlineBanner" style="display:none; background:#EF4444; color:#fff; padding:0.7em 1.2em; text-align:center; font-weight:bold; border-radius:16px; z-index:999;">
+  📴 Χωρίς σύνδεση στο internet — Τα μηνύματά σου δεν αποστέλλονται!
+</div>
+<div id="usernameForm">
+  <input id="usernameInput" type="text" placeholder="Πληκτρολόγησε το όνομα χρήστη" maxlength="20" />
+  <input id="avatarInput" type="text" placeholder="URL φωτογραφίας προφίλ (προαιρετικό)" />
+  <input id="roomNameInput" type="text" placeholder="Όνομα δωματίου με Λατινικούς χαρακτήρες (π.χ. myroom)" maxlength="30" />
+  <input id="pinInput" type="text" placeholder="Κωδικός PIN δωματίου" maxlength="12" />
+  <button id="saveUsernameBtn">Αποθήκευση</button>
+ <div id="infoBox" class="collapsible-card">
+  <button id="toggleGuide" type="button" class="collapsible-btn" aria-expanded="false">
+    <span>💡 Quick Start Guide</span>
+    <svg class="chevron" width="20" height="20" fill="none" viewBox="0 0 20 20">
+      <path stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 8l4 4 4-4"/>
+    </svg>
+  </button>
+  <div id="infoGuideContent" class="collapsible-content" style="display:none;">
+    <ul>
+      <li>👤 <strong>Όνομα χρήστη:</strong> Πληκτρολόγησε όνομα της αρεσκείας σου</li>
+      <li>📸 <strong>URL Φωτογραφίας:</strong> Βάλε προαιρετικά το link μιας εικόνας</li>
+      <li>🔐 <strong>PIN:</strong> 4+ χαρακτήρες για ασφάλεια</li>
+      <li>🏠 <strong>Όνομα Δωματίου:</strong> 3+ Λατινικοί χαρακτήρες (π.χ. myroom)</li>
+      <li>🚪 <strong>Νέο δωμάτιο:</strong> Για δημιουργία νέου δωματίου πληκτρολόγησε PIN και όνομα δωματίου της αρεσκείας σου και μοίρασε το</li>
+    </ul>
+  </div>
+</div>
+</div>
+<div id="chat" style="display:none;">
+<div id="chatHeader">
+  Chat room name: <span id="roomNameDisplay">-</span> · <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#60a5fa;stop-opacity:0.2" />
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:0.1" />
+    </linearGradient>
+  </defs>
+  <circle cx="12" cy="12" r="11" fill="url(#bgGrad)"/>
+  <circle cx="12" cy="8" r="3.5" fill="#3b82f6"/>
+  <path d="M 7 16 Q 7 13.5 12 13.5 Q 17 13.5 17 16 L 17 18 Q 17 19 12 19 Q 7 19 7 18 Z" fill="#3b82f6"/>
+</svg> <span id="participantCount">0</span>
+</div>
+  <div id="messages"></div>
+  <div class="emoji-picker" id="emojiPicker">
+  <div class="emoji-grid" id="emojiGrid"></div>
+</div>
+  <div id="formContainer">
+    <textarea id="msgInput" placeholder="Γράψε μήνυμα..." rows="1"></textarea>
+    <button id="sendBtn" disabled>Send</button>
+	<button id="emojiBtn" title="Επιλογέας Emoji"><svg width="25" height="25" viewBox="0 0 38 38" fill="none">
+    <circle cx="19" cy="19" r="16" fill="#FFD966" />
+    <ellipse cx="13" cy="16" rx="2" ry="2.5" fill="#222"/>
+    <ellipse cx="25" cy="16" rx="2" ry="2.5" fill="#222"/>
+    <path d="M12 25 Q19 31 26 25" stroke="#222" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+  </svg></button>
+	<button id="exitChatBtn">Exit</button>
+	<button id="deleteChatBtn" title="Delete entire chat and all messages" style="background-color: #d93030;">Delete Chat</button>
+  </div>
+</div>
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+<script>
+  const firebaseConfig = {
+  apiKey: "AIzaSyCEwq6LnJk5aE7pcVzBZHgwF-9oojJG46Q",
+  authDomain: "viberclone-d44c3.firebaseapp.com",
+  projectId: "viberclone-d44c3",
+  storageBucket: "viberclone-d44c3.firebasestorage.app",
+  messagingSenderId: "98425544519",
+  appId: "1:98425544519:web:8db7e8dc5068a69d497662",
+  measurementId: "G-GX3P2QHXD1"
+  };
+  // Base64 encode
+  function encodeMessage(str) {
+  return btoa(unescape(encodeURIComponent(str)));
+}
+  // Base64 decode
+function decodeMessage(str) {
+  try {
+    return decodeURIComponent(escape(atob(str)));
+  } catch(e) {
+    return str;
+  }
+}
+let beepPrimed = false;
+function unlockMobileAudio() {
+  if (!beepPrimed && window.AudioContext) {
+    try {
+      new window.AudioContext().resume();
+      beepPrimed = true;
+    } catch(e) {}
+  }
+}
+document.body.addEventListener('touchstart', unlockMobileAudio, { once: true });
+document.body.addEventListener('click', unlockMobileAudio, { once: true });
+function renderRichText(msg) {
+  // --- Helper για ασφάλεια (escape HTML) ---
+  const escapeHtml = (text) => text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+  // --- Helper για YouTube placeholder ---
+  const ytEmbed = (id) => `__YT_EMBED_${id}__`;
+  // Πρώτα: αντικατάσταση YouTube links με placeholders (πριν το escape)
+  let html = msg;
+  // 1️⃣ YouTube links (watch?v=)
+  html = html.replace(
+    /https?:\/\/(?:www\.)?youtube\.com\/watch\?v=([A-Za-z0-9_-]{11})(?:[^\s]*)?/g,
+    (m, id) => ytEmbed(id)
+  );
+  // 2️⃣ YouTube short links (youtu.be)
+  html = html.replace(
+    /https?:\/\/youtu\.be\/([A-Za-z0-9_-]{11})(?:[^\s]*)?/g,
+    (m, id) => ytEmbed(id)
+  );
+  // 3️⃣ YouTube Shorts
+  html = html.replace(
+    /https?:\/\/(?:www\.)?youtube\.com\/shorts\/([A-Za-z0-9_-]{11})(?:[^\s]*)?/g,
+    (m, id) => ytEmbed(id)
+  );
+  // Τώρα: Escape HTML (ώστε να αποφευχθούν injections)
+  html = escapeHtml(html);
+  // 5️⃣ Υπόλοιπα URLs → clickable links
+  html = html.replace(
+    /https?:\/\/[^\s<>"]+/g,
+    `<a href="$&" target="_blank" rel="noopener noreferrer" style="color:#000000;text-decoration:underline;">$&</a>`
+  );
+  // 6️⃣ Τελικό βήμα: Αντικατάσταση YouTube placeholders με το embed iframe
+  html = html.replace(
+    /__YT_EMBED_([A-Za-z0-9_-]{11})__/g,
+    (m, id) => `
+      <div style="margin:0.8em 0;width:100%;">
+        <iframe
+          width="100%"
+          height="220"
+          src="https://www.youtube.com/embed/${id}"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          style="border-radius:12px;"
+        ></iframe>
+      </div>
+    `
+  );
+  return html;
+}
+function generateRoomKey(pin, roomName) {
+    // Combine PIN + RoomName για unique key
+    return `${roomName.toLowerCase().trim()}_${pin.trim()}`;
+  }
+  let unreadCount = 0;
+function updatePageTitle() {
+  if (unreadCount > 0) {
+    document.title = `🔴 (${unreadCount}) Incognito Chat App`;
+  } else {
+    document.title = "Incognito Chat App - Speak Free";
+  }
+}
+function updateBrowserBadge() {
+  if (unreadCount > 0) {
+    if (navigator.setAppBadge) {
+      navigator.setAppBadge(unreadCount);
+    }
+  } else {
+    if (navigator.clearAppBadge) {
+      navigator.clearAppBadge();
+    }
+  }
+}
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) {
+    unreadCount = 0;
+    updatePageTitle();
+    updateBrowserBadge();
+  }
+});
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+  let currentUser = null;
+  let username = localStorage.getItem("chatUsername");
+  let unsubscribeMessages = null;
+  let avatarURL = localStorage.getItem("chatAvatarURL");
+  let chatPin = localStorage.getItem("chatPin");
+  let roomName = localStorage.getItem("chatRoomName");
+  let presenceInterval = null;
+  let presenceRef = null;
+  let unsubscribeParticipants = null;
+  const usernameForm = document.getElementById("usernameForm");
+  const usernameInput = document.getElementById("usernameInput");
+  const avatarInput = document.getElementById("avatarInput");
+  const saveUsernameBtn = document.getElementById("saveUsernameBtn");
+  const chatDiv = document.getElementById("chat");
+  const messagesDiv = document.getElementById("messages");
+  const msgInput = document.getElementById("msgInput");
+  const sendBtn = document.getElementById("sendBtn");
+  const emojiBtn = document.getElementById("emojiBtn");
+  const exitChatBtn = document.getElementById("exitChatBtn");
+  const roomNameInput = document.getElementById("roomNameInput"); 
+  const pinInput = document.getElementById("pinInput");
+exitChatBtn.onclick = () => {
+if (unsubscribeMessages) {
+   unsubscribeMessages();  // Σταμάτα τον προηγούμενο listener άμεσα!
+}
+stopPresenceUpdates();
+  
+  if (currentUser && chatPin) {
+    db.collection("chats").doc(chatPin)
+      .collection("presence").doc(currentUser.uid)
+      .delete()
+      .catch(e => console.log("Σφάλμα διαγραφής presence:", e));
+  }
+  
+  if (unsubscribeParticipants) {
+    unsubscribeParticipants();
+    unsubscribeParticipants = null;
+  }
+  // ✅ ΤΕΛ. ΝΕΟ
+  // 🔴 Clear badge when exiting
+  unreadCount = 0;
+  updatePageTitle();
+  updateBrowserBadge();
+  localStorage.removeItem("chatPin");
+  localStorage.removeItem("chatRoomName");
+  chatPin = null;
+  roomName = null;
+  chatDiv.style.display = "none";
+  usernameForm.style.display = "flex";
+  pinInput.value = "";
+  roomNameInput.value = ""; 
+};
+  if (username && chatPin && roomName && chatPin.match(/^[\w\d_]{7,}$/)) {
+  usernameForm.style.display = "none";
+  chatDiv.style.display = "flex";
+  usernameInput.value = username;
+  avatarInput.value = avatarURL || "";
+  pinInput.value = "";
+  roomNameInput.value = roomName;
+  startChat();
+} else {
+  localStorage.removeItem("chatPin");
+  localStorage.removeItem("chatRoomName");
+  chatPin = null;
+  roomName = null;
+  usernameForm.style.display = "flex";
+  chatDiv.style.display = "none";
+  pinInput.value = "";
+  roomNameInput.value = "";
+}
+saveUsernameBtn.onclick = () => {
+  const val = usernameInput.value.trim();
+  const avatarVal = avatarInput.value.trim();
+  const pinVal = pinInput.value.trim();
+  const roomNameVal = roomNameInput.value.trim();
+  // ✅ Έλεγχος όνομα χρήστη
+  if (val.length < 2) {
+    alert("Το όνομα χρήστη πρέπει να έχει τουλάχιστον 2 χαρακτήρες.");
+    return;
+  }
+  // ✅ Έλεγχος PIN
+  if (!pinVal.match(/^[\w\d]{4,}$/)) {
+    alert("Το PIN πρέπει να είναι τουλάχιστον 4 σύμβολα (γράμματα/αριθμοί).");
+    return;
+  }
+  // ✅ Έλεγχος όνομα δωματίου
+  if (!roomNameVal.match(/^[\w\d]{3,}$/)) {
+    alert("Το όνομα δωματίου πρέπει να είναι τουλάχιστον 3 Λατινικοί χαρακτήρες (γράμματα/αριθμοί).");
+    return;
+  }
+  // ✅ Αποθήκευση μεταβλητών
+  username = val;
+  avatarURL = avatarVal;
+  chatPin = generateRoomKey(pinVal, roomNameVal);
+  roomName = roomNameVal;
+  // ✅ Αποθήκευση στο localStorage
+  localStorage.setItem("chatUsername", username);
+  localStorage.setItem("chatAvatarURL", avatarURL);
+  localStorage.setItem("chatPin", chatPin);
+  localStorage.setItem("chatRoomName", roomName);
+  // ✅ Εμφάνιση chat, απόκρυψη φόρμας
+  usernameForm.style.display = "none";
+  chatDiv.style.display = "flex";
+  // ✅ Ξεκίνησε το chat
+  startChat();
+};
+  sendBtn.onclick = sendMessage;
+  msgInput.addEventListener("input", () => {
+    sendBtn.disabled = msgInput.value.trim().length === 0;
+    msgInput.style.height = "auto";
+    msgInput.style.height = msgInput.scrollHeight + "px";
+  });
+  msgInput.addEventListener("keydown", e => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      if (!sendBtn.disabled) sendMessage();
+    }
+  });
+  const emojiPicker = document.getElementById("emojiPicker");
+  const emojiGrid = document.getElementById("emojiGrid");
+// Popular emojis
+const emojis = [
+  '😀', '😃', '😄', '😁', '😆', '😅', '🤣', '😂',
+  '🙂', '🙃', '😉', '😊', '😇', '🥰', '😍', '🤩',
+  '😘', '😗', '😚', '😙', '😋', '😛', '😜', '🤪',
+  '😝', '🤑', '🤗', '🤭', '🤫', '🤔', '🤐', '🤨',
+  '😐', '😑', '😶', '😏', '😒', '🙄', '😬', '🤥',
+  '😌', '😔', '😪', '🤤', '😴', '😷', '🤒', '🤕',
+  '🤢', '🤮', '🤧', '🥵', '🥶', '😎', '🤓', '🧐',
+  '😕', '😟', '🙁', '☹️', '😮', '😯', '😲', '😳',
+  '🥺', '😦', '😧', '😨', '😰', '😥', '😢', '😭',
+  '😱', '😖', '😣', '😞', '😓', '😩', '😫', '🥱',
+  '👍', '👎', '👌', '✌️', '🤞', '🤟', '🤘', '🤙',
+  '👏', '🙌', '👐', '🤲', '🤝', '🙏', '✍️', '💪',
+  '❤️', '🧡', '💛', '💚', '💙', '💜', '🖤', '🤍',
+  '💔', '❣️', '💕', '💞', '💓', '💗', '💖', '💘',
+  '🔥', '✨', '💫', '⭐', '🌟', '💥', '💯', '✅'
+];
+// Populate emoji grid
+emojis.forEach(emoji => {
+  const emojiItem = document.createElement('div');
+  emojiItem.className = 'emoji-item';
+  emojiItem.textContent = emoji;
+  emojiItem.onclick = () => insertEmoji(emoji);
+  emojiGrid.appendChild(emojiItem);
+});
+// Toggle emoji picker
+emojiBtn.onclick = (e) => {
+  e.stopPropagation();
+  emojiPicker.classList.toggle('show');
+};
+// Close emoji picker when clicking outside
+document.addEventListener('click', (e) => {
+  if (!emojiPicker.contains(e.target) && e.target !== emojiBtn) {
+    emojiPicker.classList.remove('show');
+  }
+});
+function insertEmoji(emoji) {
+  const start = msgInput.selectionStart || 0;
+  const end = msgInput.selectionEnd || 0;
+  const text = msgInput.value;
+  msgInput.value = text.substring(0, start) + emoji + text.substring(end);
+  msgInput.selectionStart = msgInput.selectionEnd = start + emoji.length;
+  msgInput.focus();
+  sendBtn.disabled = msgInput.value.trim().length === 0;
+  emojiPicker.classList.remove('show');
+}
+function updatePresence() {
+  if (!currentUser || !chatPin) return;
+  
+  presenceRef = db.collection("chats").doc(chatPin)
+    .collection("presence").doc(currentUser.uid);
+  
+  presenceRef.set({
+    uid: currentUser.uid,
+    username: username,
+    avatar: avatarURL,
+    lastSeen: firebase.firestore.FieldValue.serverTimestamp(),
+    status: "active"
+  }, { merge: true }).catch(e => {
+    console.log("Σφάλμα ενημέρωσης presence:", e);
+  });
+}
+function startPresenceUpdates() {
+  updatePresence();
+  
+  presenceInterval = setInterval(updatePresence, 30000);
+  
+  window.addEventListener('beforeunload', () => {
+    if (presenceRef && currentUser && chatPin) {
+      db.collection("chats").doc(chatPin)
+        .collection("presence").doc(currentUser.uid)
+        .delete()
+        .catch(e => console.log("Σφάλμα διαγραφής presence:", e));
+    }
+  });
+}
+function stopPresenceUpdates() {
+  if (presenceInterval) {
+    clearInterval(presenceInterval);
+    presenceInterval = null;
+  }
+}
+function listenToParticipants() {
+  if (!chatPin) return;
+  
+  if (unsubscribeParticipants) {
+    unsubscribeParticipants();
+  }
+  
+  unsubscribeParticipants = db.collection("chats").doc(chatPin)
+    .collection("presence")
+    .onSnapshot(snapshot => {
+      const count = snapshot.size;
+      document.getElementById("participantCount").textContent = count;
+      
+      console.log(`👥 Συμμέτοχοι: ${count}`);
+    }, error => {
+      console.log("Σφάλμα ακρόασης συμμετόχων:", error);
+    });
+}
+  function startChat() {
+  auth.signInAnonymously().catch(console.error);
+  auth.onAuthStateChanged(async user => {
+    if (user) {
+      currentUser = user;
+      document.getElementById("roomNameDisplay").textContent = roomName;
+      // Χρησιμοποίησε το composite key
+      const chatRef = db.collection("chats").doc(chatPin);
+      const chatDoc = await chatRef.get();
+      if (!chatDoc.exists) {
+        await chatRef.set({ 
+          createdAt: new Date(), 
+          roomKey: chatPin,
+          roomName: roomName
+        });
+      }
+	  startPresenceUpdates();
+      listenToParticipants();
+      listenMessages();
+    }
+  });
+}
+function listenMessages() {
+  let isFirstLoad = true;
+  // Απεγκαθιστά τον προηγούμενο listener αν υπάρχει
+  if (unsubscribeMessages) {
+    unsubscribeMessages();
+  }
+  unsubscribeMessages = db.collection("chats").doc(chatPin)
+    .collection("messages").orderBy("createdAt")
+    .onSnapshot(snapshot => {
+      messagesDiv.innerHTML = "";
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        const whoSent = data.uid === currentUser.uid ? "sent" : "received";
+        messagesDiv.appendChild(createMessageElement(data.text, data.username, data.avatarURL, whoSent));
+      });
+      // Παίζουμε ήχο μόνο για νέα μηνύματα (όχι στην πρώτη φόρτωση)
+      if (!isFirstLoad) {
+        snapshot.docChanges().forEach(change => {
+          if (change.type === "added") {
+            const data = change.doc.data();
+            if (data.uid !== currentUser.uid) {
+  playBeep();
+  if (window.navigator && window.navigator.vibrate) {
+    window.navigator.vibrate(120);
+  }
+  
+  // 🔴 NEW: Notification badge
+  unreadCount++;
+  updatePageTitle();
+  updateBrowserBadge();
+}
+          }
+        });
+      }
+      isFirstLoad = false;
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    });
+}
+  function createMessageElement(text, usernameMsg, avatar, sentOrReceived) {
+  const msgDiv = document.createElement("div");
+  msgDiv.classList.add("message", sentOrReceived);
+  const avatarImg = document.createElement("img");
+  avatarImg.classList.add("avatar");
+  avatarImg.src = avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(usernameMsg)}&background=3b82f6&color=fff&rounded=true`;
+  avatarImg.alt = usernameMsg;
+  const contentDiv = document.createElement("div");
+  contentDiv.classList.add("messageContent");
+  const usernameSpan = document.createElement("div");
+  usernameSpan.classList.add("username");
+  usernameSpan.textContent = usernameMsg;
+  const textSpan = document.createElement("div");
+  // ΕΔΩ κάνεις την αποκωδικοποίηση για εμφάνιση στο bubble:
+  textSpan.innerHTML = renderRichText(decodeMessage(text));
+  contentDiv.appendChild(usernameSpan);
+  contentDiv.appendChild(textSpan);
+  msgDiv.appendChild(avatarImg);
+  msgDiv.appendChild(contentDiv);
+  return msgDiv;
+}
+  async function sendMessage() {
+  if (!chatPin || !currentUser) {
+    alert("Δεν υπάρχει ενεργό chat room");
+    return;
+  }
+  if (!navigator.onLine) {
+    alert("Δεν έχετε σύνδεση στο internet. Το μήνυμα δεν στάλθηκε.");
+    return;
+  }
+  const text = msgInput.value.trim();
+  if (!text) return;
+  await db.collection("chats").doc(chatPin)
+    .collection("messages").add({
+      uid: currentUser.uid,
+      username: username,
+      avatarURL: avatarURL,
+      text: encodeMessage(text),
+      createdAt: new Date()
+    });
+  msgInput.value = "";
+  sendBtn.disabled = true;
+  msgInput.style.height = "auto";
+}
+  function playBeep() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = ctx.createOscillator();
+    const gain = ctx.createGain();
+    oscillator.type = 'sine';
+    oscillator.frequency.value = 600;
+    gain.gain.value = 0.17;
+    oscillator.connect(gain);
+    gain.connect(ctx.destination);
+    oscillator.start();
+    oscillator.stop(ctx.currentTime + 0.18);
+    oscillator.onended = () => ctx.close();
+  } catch (e) {
+    console.log('Audio not supported');
+  }
+}
+</script>
+<footer id="footer">
+<span>Incognito Chat © 2025 • Powered by <a href="http://linkedin.com/in/konstantinos-kalliakoudis-902b90103" target="_blank" rel="noopener noreferrer" style="color:#3b82f6;">KonsKall</a></span>
+</footer>
+<!-- Delete Confirmation Modal - ΕΔΩ ΤΟ ΒΑΛΕ -->
+<div id="deleteConfirmationModal" class="modal">
+  <div class="modal-overlay"></div>
+  <div class="modal-content">
+    <h3>⚠️ Διαγραφή συνομιλίας;</h3>
+    <p>Αυτή η ενέργεια θα διαγράψει μόνιμα ολόκληρο το δωμάτιο συνομιλίας και όλα τα μηνύματα..</p>
+    <p style="color: #666; font-size: 0.9rem;">⚠️ Αυτή η ενέργεια δεν μπορεί να αναιρεθεί...</p>
+    <div class="modal-buttons">
+      <button id="cancelDeleteBtn">Ακύρωση</button>
+      <button id="confirmDeleteBtn">Διαγραφή Chat</button>
+    </div>
+  </div>
+</div>
+<!-- ΔΕΥΤΕΡΟ SCRIPT - ΓΙΑ ΤΟ DELETE CODE -->
+<script>
+// Get modal elements
+const deleteConfirmationModal = document.getElementById('deleteConfirmationModal');
+const deleteChatBtn = document.getElementById('deleteChatBtn');
+const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+const modalOverlay = deleteConfirmationModal.querySelector('.modal-overlay');
+// Open delete confirmation modal
+deleteChatBtn.onclick = () => {
+  deleteConfirmationModal.classList.add('show');
+};
+// Close modal on cancel
+cancelDeleteBtn.onclick = () => {
+  deleteConfirmationModal.classList.remove('show');
+};
+// Close modal when clicking overlay
+modalOverlay.onclick = () => {
+  deleteConfirmationModal.classList.remove('show');
+};
+// Confirm and execute deletion
+confirmDeleteBtn.onclick = async () => {
+  if (!chatPin) {
+    alert('Δεν υπάρχει ενεργό chat room');
+    return;
+  }
+  try {
+    confirmDeleteBtn.disabled = true;
+    confirmDeleteBtn.textContent = '⏳ Διαγραφή...';
+	stopPresenceUpdates();
+    if (unsubscribeParticipants) {
+      unsubscribeParticipants();
+      unsubscribeParticipants = null;
+    }
+    const chatRef = db.collection('chats').doc(chatPin);
+	const presenceSnapshot = await chatRef.collection('presence').get();
+    const batch1 = db.batch();
+    presenceSnapshot.forEach(doc => {
+      batch1.delete(doc.ref);
+    });
+    await batch1.commit();
+    const messagesRef = chatRef.collection('messages');
+    const snapshot = await messagesRef.get();
+    const batch = db.batch();
+    let operationCount = 0;
+    snapshot.forEach(doc => {
+      batch.delete(doc.ref);
+      operationCount++;
+      if (operationCount >= 500) {
+        batch.commit();
+        operationCount = 0;
+      }
+    });
+    if (operationCount > 0) {
+      await batch.commit();
+    }
+    await chatRef.delete();
+    if (unsubscribeMessages) {
+      unsubscribeMessages();
+      unsubscribeMessages = null;
+    }
+    localStorage.removeItem('chatPin');
+	localStorage.removeItem('chatRoomName');
+    localStorage.removeItem('chatUsername');
+    localStorage.removeItem('chatAvatarURL');
+	chatPin = null;
+    roomName = null;
+    username = null;
+    avatarURL = null;
+    chatDiv.style.display = 'none';
+    usernameForm.style.display = 'flex';
+    document.getElementById('pinInput').value = '';
+    document.getElementById('usernameInput').value = '';
+    document.getElementById('avatarInput').value = '';
+    messagesDiv.innerHTML = '';
+	document.getElementById('roomNameInput').value = '';
+    msgInput.value = '';
+    sendBtn.disabled = true;
+    deleteConfirmationModal.classList.remove('show');
+    confirmDeleteBtn.disabled = false;
+    confirmDeleteBtn.textContent = '🗑️ Διαγραφή Chat';
+    alert('✅ Το Chat διεγράφη επιτυχώς!');
+  } catch (error) {
+    console.error('Σφάλμα κατά τη διαγραφή του chat:', error);
+    alert('❌ Σφάλμα κατά τη διαγραφή του chat: ' + error.message);
+    confirmDeleteBtn.disabled = false;
+    confirmDeleteBtn.textContent = '🗑️ Διαγραφή Chat';
+  }
+};
+// Close modal with Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && deleteConfirmationModal.classList.contains('show')) {
+    deleteConfirmationModal.classList.remove('show');
+  }
+});
+// Banner για offline ένδειξη
+const offlineBanner = document.getElementById("offlineBanner");
+// Ενημερώνει τον χρήστη αμέσως όταν πάει offline/online
+function updateOfflineStatus() {
+  if (!navigator.onLine) {
+    offlineBanner.style.display = "block";
+    sendBtn.disabled = true;
+  } else {
+    offlineBanner.style.display = "none";
+    // Μόνο αν υπάρχει κείμενο - ξανά έλεγχος
+    sendBtn.disabled = msgInput.value.trim().length === 0;
+  }
+}
+// Αρχική κατάσταση και listeners
+window.addEventListener("load", updateOfflineStatus);
+window.addEventListener("online", updateOfflineStatus);
+window.addEventListener("offline", updateOfflineStatus);
+// Optionally: δοκίμασε όταν πληκτρολογεί ο χρήστης
+msgInput.addEventListener("input", () => {
+  if (!navigator.onLine) sendBtn.disabled = true;
+});
+</script>
+<script>
+document.getElementById("toggleGuide").addEventListener("click", function(){
+  var content = document.getElementById("infoGuideContent");
+  var card = document.getElementById("infoBox");
+  var expanded = content.style.display === "block";
+  content.style.display = expanded ? "none" : "block";
+  card.classList.toggle("open", !expanded);
+  this.setAttribute("aria-expanded", String(!expanded));
+});
+</script>
+</body>
+</html>
