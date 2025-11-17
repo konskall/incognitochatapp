@@ -1090,17 +1090,17 @@ saveUsernameBtn.onclick = () => {
   const roomNameVal = roomNameInput.value.trim();
   // ✅ Έλεγχος όνομα χρήστη
   if (val.length < 2) {
-    alert("Το όνομα χρήστη πρέπει να έχει τουλάχιστον 2 χαρακτήρες.");
+    alert("Username must be at least 2 characters long.");
     return;
   }
   // ✅ Έλεγχος PIN
   if (!pinVal.match(/^[\w\d]{4,}$/)) {
-    alert("Το PIN πρέπει να είναι τουλάχιστον 4 σύμβολα (γράμματα/αριθμοί).");
+    alert("PIN must be at least 4 symbols (letters/numbers).");
     return;
   }
   // ✅ Έλεγχος όνομα δωματίου
   if (!roomNameVal.match(/^[\w\d]{3,}$/)) {
-    alert("Το όνομα δωματίου πρέπει να είναι τουλάχιστον 3 Λατινικοί χαρακτήρες (γράμματα/αριθμοί).");
+    alert("Chat room name must be at least 3 Latin characters (letters/numbers).");
     return;
   }
   // ✅ Αποθήκευση μεταβλητών
@@ -1192,7 +1192,7 @@ function updatePresence() {
     lastSeen: firebase.firestore.FieldValue.serverTimestamp(),
     status: "active"
   }, { merge: true }).catch(e => {
-    console.log("Σφάλμα ενημέρωσης presence:", e);
+    console.log("Presence update error:", e);
   });
 }
 function startPresenceUpdates() {
@@ -1223,10 +1223,9 @@ function listenToParticipants() {
     .onSnapshot(snapshot => {
       const count = snapshot.size;
       document.getElementById("participantCount").textContent = count;
-      
-      console.log(`👥 Συμμέτοχοι: ${count}`);
+      console.log(`👥 Participants: ${count}`);
     }, error => {
-      console.log("Σφάλμα ακρόασης συμμετόχων:", error);
+      console.log("Participant listening error:", error);
     });
 }
   function startChat() {
@@ -1312,11 +1311,11 @@ function listenMessages() {
 }
   async function sendMessage() {
   if (!chatPin || !currentUser) {
-    alert("Δεν υπάρχει ενεργό chat room");
+    alert("There is no active chat room.");
     return;
   }
   if (!navigator.onLine) {
-    alert("Δεν έχετε σύνδεση στο internet. Το μήνυμα δεν στάλθηκε.");
+    alert("You do not have an internet connection. The message was not sent..");
     return;
   }
   const text = msgInput.value.trim();
@@ -1358,9 +1357,9 @@ function listenMessages() {
 <div id="deleteConfirmationModal" class="modal">
   <div class="modal-overlay"></div>
   <div class="modal-content">
-    <h3>⚠️ Διαγραφή συνομιλίας;</h3>
-    <p>Αυτή η ενέργεια θα διαγράψει μόνιμα ολόκληρο το δωμάτιο συνομιλίας και όλα τα μηνύματα...</p>
-    <p style="color: #666; font-size: 0.9rem;">⚠️ Αυτή η ενέργεια δεν μπορεί να αναιρεθεί...</p>
+    <h3>⚠️ Delete conversation?</h3>
+    <p>This action will permanently delete the entire chat room and all messages....</p>
+    <p style="color: #666; font-size: 0.9rem;">⚠️ This action cannot be undone....</p>
     <div class="modal-buttons">
       <button id="cancelDeleteBtn">Ακύρωση</button>
       <button id="confirmDeleteBtn">Διαγραφή Chat</button>
@@ -1390,12 +1389,12 @@ modalOverlay.onclick = () => {
 // Confirm and execute deletion
 confirmDeleteBtn.onclick = async () => {
   if (!chatPin) {
-    alert('Δεν υπάρχει ενεργό chat room');
+    alert('There is no active chat room.');
     return;
   }
   try {
     confirmDeleteBtn.disabled = true;
-    confirmDeleteBtn.textContent = '⏳ Διαγραφή...';
+    confirmDeleteBtn.textContent = '⏳ Deleting...';
 	stopPresenceUpdates();
     if (unsubscribeParticipants) {
       unsubscribeParticipants();
@@ -1447,11 +1446,11 @@ confirmDeleteBtn.onclick = async () => {
     sendBtn.disabled = true;
     deleteConfirmationModal.classList.remove('show');
     confirmDeleteBtn.disabled = false;
-    confirmDeleteBtn.textContent = '🗑️ Διαγραφή Chat';
-    alert('✅ Το Chat διεγράφη επιτυχώς!');
+    confirmDeleteBtn.textContent = '🗑️ Delete Chat';
+    alert('✅ Chat successfully deleted!');
   } catch (error) {
-    console.error('Σφάλμα κατά τη διαγραφή του chat:', error);
-    alert('❌ Σφάλμα κατά τη διαγραφή του chat: ' + error.message);
+    console.error('Error deleting chat:', error);
+    alert('❌ Error deleting chat: ' + error.message);
     confirmDeleteBtn.disabled = false;
     confirmDeleteBtn.textContent = '🗑️ Διαγραφή Chat';
   }
@@ -1495,6 +1494,4 @@ document.getElementById("toggleGuide").addEventListener("click", function(){
 });
 </script>
 </body>
-
 </html>
-
