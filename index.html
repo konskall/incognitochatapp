@@ -835,14 +835,14 @@ h1 { font-size:2rem; font-weight:700; color:#3b82f6; margin:0; }
   <h1>Incognito Chat</h1>
 </div>
 <div id="offlineBanner" style="display:none; background:#EF4444; color:#fff; padding:0.7em 1.2em; text-align:center; font-weight:bold; border-radius:16px; z-index:999;">
-  📴 Χωρίς σύνδεση στο internet — Τα μηνύματά σου δεν αποστέλλονται!
+  📴 No internet connection — Your messages are not sent!
 </div>
 <div id="usernameForm">
-  <input id="usernameInput" type="text" placeholder="Πληκτρολόγησε το όνομα χρήστη" maxlength="20" />
-  <input id="avatarInput" type="text" placeholder="URL φωτογραφίας προφίλ (προαιρετικό)" />
-  <input id="roomNameInput" type="text" placeholder="Όνομα δωματίου με Λατινικούς χαρακτήρες (π.χ. myroom)" maxlength="30" />
-  <input id="pinInput" type="text" placeholder="Κωδικός PIN δωματίου" maxlength="12" />
-  <button id="saveUsernameBtn">Αποθήκευση</button>
+  <input id="usernameInput" type="text" placeholder="Type your username" maxlength="20" />
+  <input id="avatarInput" type="text" placeholder="Profile photo URL (optional)" />
+  <input id="roomNameInput" type="text" placeholder="Room name in Latin characters (e.g. myroom)" maxlength="30" />
+  <input id="pinInput" type="text" placeholder="Room PIN code" maxlength="12" />
+  <button id="saveUsernameBtn">Submit</button>
  <div id="infoBox" class="collapsible-card">
   <button id="toggleGuide" type="button" class="collapsible-btn" aria-expanded="false">
     <span>💡 Quick Start Guide</span>
@@ -852,11 +852,11 @@ h1 { font-size:2rem; font-weight:700; color:#3b82f6; margin:0; }
   </button>
   <div id="infoGuideContent" class="collapsible-content" style="display:none;">
     <ul>
-      <li>👤 <strong>Όνομα χρήστη:</strong> Πληκτρολόγησε όνομα της αρεσκείας σου</li>
-      <li>📸 <strong>URL Φωτογραφίας:</strong> Βάλε προαιρετικά το link μιας εικόνας</li>
-      <li>🔐 <strong>PIN:</strong> 4+ χαρακτήρες για ασφάλεια</li>
-      <li>🏠 <strong>Όνομα Δωματίου:</strong> 3+ Λατινικοί χαρακτήρες (π.χ. myroom)</li>
-      <li>🚪 <strong>Νέο δωμάτιο:</strong> Για δημιουργία νέου δωματίου πληκτρολόγησε PIN και όνομα δωματίου της αρεσκείας σου και μοίρασε το</li>
+      <li>👤 <strong>Username:</strong> Type a name of your choice</li>
+      <li>📸 <strong>Profile photo URL:</strong> Optionally insert link to an image</li>
+      <li>🔐 <strong>PIN:</strong> 4+ characters for security</li>
+      <li>🏠 <strong>Room name:</strong> 3+ Latin characters (e.g. myroom)</li>
+      <li>🚪 <strong>New room:</strong> To create a new room, enter a PIN and a room name of your choice and share it.</li>
     </ul>
   </div>
 </div>
@@ -1090,17 +1090,17 @@ saveUsernameBtn.onclick = () => {
   const roomNameVal = roomNameInput.value.trim();
   // ✅ Έλεγχος όνομα χρήστη
   if (val.length < 2) {
-    alert("Το όνομα χρήστη πρέπει να έχει τουλάχιστον 2 χαρακτήρες.");
+    alert("Username must have at least 2 characters.");
     return;
   }
   // ✅ Έλεγχος PIN
   if (!pinVal.match(/^[\w\d]{4,}$/)) {
-    alert("Το PIN πρέπει να είναι τουλάχιστον 4 σύμβολα (γράμματα/αριθμοί).");
+    alert("PIN must be at least 4 symbols (letters/numbers).");
     return;
   }
   // ✅ Έλεγχος όνομα δωματίου
   if (!roomNameVal.match(/^[\w\d]{3,}$/)) {
-    alert("Το όνομα δωματίου πρέπει να είναι τουλάχιστον 3 Λατινικοί χαρακτήρες (γράμματα/αριθμοί).");
+    alert("Room name must be at least 3 Latin characters (letters/numbers).");
     return;
   }
   // ✅ Αποθήκευση μεταβλητών
@@ -1358,12 +1358,12 @@ function listenMessages() {
 <div id="deleteConfirmationModal" class="modal">
   <div class="modal-overlay"></div>
   <div class="modal-content">
-    <h3>⚠️ Διαγραφή συνομιλίας;</h3>
-    <p>Αυτή η ενέργεια θα διαγράψει μόνιμα ολόκληρο το δωμάτιο συνομιλίας και όλα τα μηνύματα...</p>
-    <p style="color: #666; font-size: 0.9rem;">⚠️ Αυτή η ενέργεια δεν μπορεί να αναιρεθεί...</p>
+    <h3>⚠️ Delete conversation?</h3>
+    <p>This action will permanently delete the entire chat room and all messages...</p>
+    <p style="color: #666; font-size: 0.9rem;">⚠️ This action cannot be undone....</p>
     <div class="modal-buttons">
-      <button id="cancelDeleteBtn">Ακύρωση</button>
-      <button id="confirmDeleteBtn">Διαγραφή Chat</button>
+      <button id="cancelDeleteBtn">Cancel</button>
+      <button id="confirmDeleteBtn">Delete Chat</button>
     </div>
   </div>
 </div>
@@ -1447,13 +1447,13 @@ confirmDeleteBtn.onclick = async () => {
     sendBtn.disabled = true;
     deleteConfirmationModal.classList.remove('show');
     confirmDeleteBtn.disabled = false;
-    confirmDeleteBtn.textContent = '🗑️ Διαγραφή Chat';
+    confirmDeleteBtn.textContent = '🗑️ Delete Chat';
     alert('✅ Το Chat διεγράφη επιτυχώς!');
   } catch (error) {
     console.error('Σφάλμα κατά τη διαγραφή του chat:', error);
     alert('❌ Σφάλμα κατά τη διαγραφή του chat: ' + error.message);
     confirmDeleteBtn.disabled = false;
-    confirmDeleteBtn.textContent = '🗑️ Διαγραφή Chat';
+    confirmDeleteBtn.textContent = '🗑️ Delete Chat';
   }
 };
 // Close modal with Escape key
