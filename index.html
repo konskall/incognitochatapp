@@ -880,7 +880,7 @@ h1 { font-size:2rem; font-weight:700; color:#3b82f6; margin:0; }
   <div class="emoji-grid" id="emojiGrid"></div>
 </div>
   <div id="formContainer">
-    <textarea id="msgInput" placeholder="Γράψε μήνυμα..." rows="1"></textarea>
+    <textarea id="msgInput" placeholder="Type a message..." rows="1"></textarea>
     <button id="sendBtn" disabled>Send</button>
 	<button id="emojiBtn" title="Επιλογέας Emoji"><svg width="25" height="25" viewBox="0 0 38 38" fill="none">
     <circle cx="19" cy="19" r="16" fill="#FFD966" />
@@ -1312,11 +1312,11 @@ function listenMessages() {
 }
   async function sendMessage() {
   if (!chatPin || !currentUser) {
-    alert("Δεν υπάρχει ενεργό chat room");
+    alert("There is no active chat room.");
     return;
   }
   if (!navigator.onLine) {
-    alert("Δεν έχετε σύνδεση στο internet. Το μήνυμα δεν στάλθηκε.");
+    alert("You do not have an internet connection. The message was not sent.");
     return;
   }
   const text = msgInput.value.trim();
@@ -1390,12 +1390,12 @@ modalOverlay.onclick = () => {
 // Confirm and execute deletion
 confirmDeleteBtn.onclick = async () => {
   if (!chatPin) {
-    alert('Δεν υπάρχει ενεργό chat room');
+    alert('There is no active chat room.');
     return;
   }
   try {
     confirmDeleteBtn.disabled = true;
-    confirmDeleteBtn.textContent = '⏳ Διαγραφή...';
+    confirmDeleteBtn.textContent = '⏳ Deleting...';
 	stopPresenceUpdates();
     if (unsubscribeParticipants) {
       unsubscribeParticipants();
@@ -1448,10 +1448,10 @@ confirmDeleteBtn.onclick = async () => {
     deleteConfirmationModal.classList.remove('show');
     confirmDeleteBtn.disabled = false;
     confirmDeleteBtn.textContent = '🗑️ Delete Chat';
-    alert('✅ Το Chat διεγράφη επιτυχώς!');
+    alert('✅ Chat deleted successfully!');
   } catch (error) {
     console.error('Σφάλμα κατά τη διαγραφή του chat:', error);
-    alert('❌ Σφάλμα κατά τη διαγραφή του chat: ' + error.message);
+    alert('❌ Error deleting chat: ' + error.message);
     confirmDeleteBtn.disabled = false;
     confirmDeleteBtn.textContent = '🗑️ Delete Chat';
   }
