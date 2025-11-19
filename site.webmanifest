@@ -3,7 +3,7 @@
   "short_name": "Incognito Chat",
   "icons": [
     {
-      "src": "https://.github.io/incognitochatapp/web-app-manifest-192x192.png",
+      "src": "https://konskall.github.io/incognitochatapp/web-app-manifest-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
